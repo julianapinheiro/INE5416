@@ -122,8 +122,20 @@ removeLast(Id) :- listXY(Id, All), last(All, Last), nth0(1, Last, Xf),
 % Determina um novo <Id> na sequencia numerica existente
 newId(Id) :- allIds(S), last(S, Last), Id is Last + 1.
 
-% Questao 7
+% Questao 7 (CORRETO)
 % Duplica a figura com <Id> a partir de um nova posicao (X,Y)
 % Deve ser criado um <Id_novo> conforme a sequencia (questao 6)
-cloneId(Id,X,Y) :- true.
-
+cloneId(Id,X,Y) :- newId(NID),
+    				listXY(Id, All),
+    				length(All, Size),
+    				between(0, Size, Middle),
+    				nth0(Middle, All, J),
+                    nth0(1, J, XNew),
+                    nth0(2, J, YNew),
+                    XFinal is XNew + X,
+                    YFinal is YNew + Y,
+                    (
+                        (Middle =:= 0) -> 
+                            new(NID, XFinal, YFinal); 
+                        new(NID, XNew, YNew)
+                    ), ( Middle =:= Size - 1 -> true).
