@@ -1,4 +1,10 @@
 '''
+	Relatório 8 - INE5416/2017.2
+	Juliana Silva Pinheiro
+	16100735
+'''
+
+'''
 	Parte 1 - Vetores
 '''
 
@@ -52,15 +58,20 @@ def mult_matrizes(a, b):
 	return [[sum(x*y for x,y in zip(a_row, b_col)) for b_col in zip(*b)] \
 	for a_row in a]
 
-# Apenas para matrizes 3x3, usando a regra de Sarrus
+# Apenas para matrizes 3x3, usando a regra de Sarrus, e 2x2
 def determinante(a):
-	primeiro_termo = a[0][0] * a[1][1] * a[2][2] + \
-					 a[0][1] * a[1][2] * a[2][0] + \
-					 a[0][2] * a[1][0] * a[2][1]
-	segundo_termo =  a[0][2] * a[1][1] * a[2][0] + \
-					 a[0][0] * a[1][2] * a[2][1] + \
-					 a[0][1] * a[1][0] * a[2][2]
-	return primeiro_termo - segundo_termo
+	if (len(a) == 3):
+		primeiro_termo = a[0][0] * a[1][1] * a[2][2] + \
+						 a[0][1] * a[1][2] * a[2][0] + \
+						 a[0][2] * a[1][0] * a[2][1]
+		segundo_termo =  a[0][2] * a[1][1] * a[2][0] + \
+						 a[0][0] * a[1][2] * a[2][1] + \
+						 a[0][1] * a[1][0] * a[2][2]
+		return primeiro_termo - segundo_termo
+	elif (len(a) == 2):
+		return a[0][0]*a[1][1] - a[0][1]*a[1][0]
+	else:
+		return 0;
 
 # Apenas para matrizes 3x3
 def adjunta(a):
@@ -85,7 +96,6 @@ def inversa(a):
 '''
 	Main
 '''
-
 def main():
 	# Testes de vetores
 	vetor1 = [1,2,3]
@@ -103,7 +113,7 @@ def main():
 	# Testes de matrizes
 	A = [[1,1], [2,2]]
 	B = [[3,3], [3,3]]
-	C = [[1,3,1], [1,1,2], [2,3,4]] # det = 0
+	C = [[1,3,1], [1,1,2], [2,3,4]]
 	print("A: " + str(A))
 	print("B: " + str(B))
 	print("C: " + str(C))

@@ -1,0 +1,10 @@
+	Relatório 8 - INE5416/2017.2
+	Juliana Silva Pinheiro
+	16100735
+
+	Na linguagem de programação C, os arrays podem ser declarados por colchetes, como int[2] (um array de dois elementos), ou com notação de ponteiros int*, sendo inicializados de forma dinâmcia (malloc) ou com os elementos dentro de chaves, como {5, 10}. C não permite que os elementos sejam de tipos diferentes.
+
+	Já em Python, utiliza-se a estrutura de listas, declarada também com colchetes, como nomeLista = [], podendo incluir elementos de tipos diferentes. Listas em Python são mais facilmente manipuláveis em comparação a arrays em C. Um exemplo similar ao implementado ao Haskell é list comprehension que permite operações como [i for i in range(10)], que gerará uma lista de elementos de 0 a 9. Na implementação das questões do relatório, operações de list comprehension foram bastante utilizadas.
+
+	Na implementação das operações de vetores e matrizes em C, o que é passado como parâmetro para as funções é a posição do array na memória, podendo assim ser modificado dentro da função. Para uma função em C retornar um novo array, é necessário fazer alocação dinâmica deste.
+	Em Python os elementos passados como parâmetro são modificados dentro das funções. Assim, na implementação foi escolhido fazer cópias para não modificar os valores originais.
