@@ -181,7 +181,7 @@ uselapis :-
 % Monta a lista <S> com todos os <Id>s
 allIds(L) :- findall(Id, xy(Id, _, _), L1), sort(L1, L).
 
-% Monta a lista <All> com todos os pontos xy da database
+% Monta a lista <All> com todos os pontos xy da database 
 listXY(Id, All) :- findall(V, (xy(Id, X, Y), append([Id], [X], L), append(L, [Y], V)), All).
 
 % Determina um novo <Id> na sequencia numerica existente
@@ -213,34 +213,43 @@ figuraparafrente(Id, N) :-
     X is N * cos(A*pi/180), 
     Y is N * sin(A*pi/180)*(-1),
     listXY(Id, [CoInicial|_]),
-    nth0(1,CoInicial,Xinicial),
-    nth0(2,CoInicial,Yinicial),
-    retract(xy(Id, Xinicial, Yinicial)),
-    NewX is Xinicial + X,
-    NewY is Yinicial + Y,
+    nth0(1,CoInicial,X0),
+    nth0(2,CoInicial,Y0),
+    retract(xy(Id, X0, Y0)),
+    NewX is X0 + X,
+    NewY is Y0 + Y,
     asserta(xy(Id, NewX, NewY)), !.
 
 % Questao 3
 % Translada a figura <Id> para <N> passos para trás
 % Implementado utilizando o <angle> atual para o cálculo do deslocamento
 figuraparatras(Id, N) :- 
-    angle(A),
-    X is N * cos(A*pi/180)*(-1), 
-    Y is N * sin(A*pi/180),
-    listXY(Id, [CoInicial|_]),
-    nth0(1,CoInicial,Xinicial),
-    nth0(2,CoInicial,Yinicial),
-    retract(xy(Id, Xinicial, Yinicial)),
-    NewX is Xinicial + X,
-    NewY is Yinicial + Y,
-    asserta(xy(Id, NewX, Yinicial)), !.
+    M is -N,
+    figuraparafrente(Id, M).
 
 % Questao 4
 % Rotaciona a figura <Id> em A graus no sentido horário a partir da
 % coordenada absoluta inicial
-figuragiradireita(Id, A) :- true.
+% IDEIA: para cada deslocamento fazer NewX,NewY
+figuragiradireita(Id, A) :-
+    listXY(Id, [CoInicial|Desl]),  % Coordenada inicial
+    nth0(1,CoInicial,X0),          % Desl = lista de deslocamentos
+    nth0(2,CoInicial,Y0),
+    retractall(xy(Id, _, _)),      % Retract todos os deslocamentos
+    length(Desl, Size),            % Numero de deslocamentos
+    between(0, Size, Middle),
+    nth0(Middle, Desl, J),
+    nth0(1, J, X1),
+    nth0(2, J, Y1),
+    NewX is X1*cos(A*pi/180) - Y1*sin(A*pi/180),
+    NewY is Y1*cos(A*pi/180) + X1*sin(A*pi/180),
+    assertz(xy(Id, NewX, NewY)),        % Asserta novo deslocamento(i)
+    % Asserta coordenada inicial
+    ( Middle =:= Size - 1 -> asserta(xy(Id, X0, Y0)), !).          
 
 % Questao 5
 % Rotaciona a figura <Id> em A graus no sentido anti-horário a partir da
 % coordenada absoluta inicial
-figuragiraesquerda(Id, A) :- true.
+figuragiraesquerda(Id, A) :-
+    B is -A,
+    figuragiradireita(Id, B).         

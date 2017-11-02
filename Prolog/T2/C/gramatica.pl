@@ -50,11 +50,16 @@ comando --> [tartaruga],  { tartaruga }.
 comando --> [meu], [T],  { atom_number(T, X), meudesenho(X) }.
 
 % t2C
-comando --> [figclone], { figuraclone }.
-comando --> [figpf], { figuraparafrente }.
-comando --> [figpt], { figuraparatras }.
-comando --> [figgd], { figuragiradireita }.
-comando --> [figge], { figuragiraesquerda }.
+comando --> [figclone], [X], [Y], { atom_number(X, Id), 
+    atom_number(Y, N), figuraclone(Id, N) }.
+comando --> [figpf], [X], [Y], { atom_number(X, Id), 
+    atom_number(Y, N), figuraparafrente(Id, N) }.
+comando --> [figpt], [X], [Y], { atom_number(X, Id), 
+    atom_number(Y, N), figuraparatras(Id, N) }.
+comando --> [figgd], [X], [Y], { atom_number(X, Id), 
+    atom_number(Y, A), figuragiradireita(Id, A) }.
+comando --> [figge], [X], [Y], { atom_number(X, Id), 
+    atom_number(Y, A), figuragiraesquerda(Id, A) }.
 
 
 %---------------------------------------------------
