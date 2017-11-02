@@ -178,14 +178,20 @@ uselapis :-
 % -----------------------------------
 
 % Auxiliares (src: t2A/programa.pl)
-newId(Id) :- allIds(S), last(S, Last), Id is Last + 1.
+% Monta a lista <S> com todos os <Id>s
+allIds(L) :- findall(Id, xy(Id, _, _), L1), sort(L1, L).
+
+% Monta a lista <All> com todos os pontos xy da database
 listXY(Id, All) :- findall(V, (xy(Id, X, Y), append([Id], [X], L), append(L, [Y], V)), All).
+
+% Determina um novo <Id> na sequencia numerica existente
+newId(Id) :- allIds(S), last(S, Last), Id is Last + 1.
 
 % Questao 1
 % Duplica a figura <Id> (criando um novo Id), na coordenada inicial <X,Y>
 % cloneId do t2A/programa.pl modificado
 figuraclone(Id, X, Y) :- 
-    newID(NewId)
+    newId(NewId),
     retractall(xylast(_,_,_)),
     listXY(Id, All),
     length(All, Size),
@@ -197,29 +203,37 @@ figuraclone(Id, X, Y) :-
         (Middle =:= 0) -> 
             new(NewId, X, Y); 
         new(NewId, XNew, YNew)
-    ), ( Middle =:= Size - 1 -> true).
+    ), ( Middle =:= Size - 1 -> true), !.
 
 % Questao 2
 % Translada a figura <Id> para <N> passos a frente
-% Implementado apenas em relação a <X>
+% Implementado utilizando o <angle> atual para o cálculo do deslocamento
 figuraparafrente(Id, N) :- 
+    angle(A),
+    X is N * cos(A*pi/180), 
+    Y is N * sin(A*pi/180)*(-1),
     listXY(Id, [CoInicial|_]),
     nth0(1,CoInicial,Xinicial),
     nth0(2,CoInicial,Yinicial),
     retract(xy(Id, Xinicial, Yinicial)),
-    NewX is Xinicial + N,
-    asserta(xy(Id, NewX, Xinicial)).
+    NewX is Xinicial + X,
+    NewY is Yinicial + Y,
+    asserta(xy(Id, NewX, NewY)), !.
 
 % Questao 3
 % Translada a figura <Id> para <N> passos para trás
-% Implementado apenas em relação a <X>
-figuraparafrente(Id, N) :- 
+% Implementado utilizando o <angle> atual para o cálculo do deslocamento
+figuraparatras(Id, N) :- 
+    angle(A),
+    X is N * cos(A*pi/180)*(-1), 
+    Y is N * sin(A*pi/180),
     listXY(Id, [CoInicial|_]),
     nth0(1,CoInicial,Xinicial),
     nth0(2,CoInicial,Yinicial),
     retract(xy(Id, Xinicial, Yinicial)),
-    NewX is Xinicial - N,
-    asserta(xy(Id, NewX, Xinicial)).
+    NewX is Xinicial + X,
+    NewY is Yinicial + Y,
+    asserta(xy(Id, NewX, Yinicial)), !.
 
 % Questao 4
 % Rotaciona a figura <Id> em A graus no sentido horário a partir da
