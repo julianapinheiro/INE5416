@@ -201,11 +201,25 @@ figuraclone(Id, X, Y) :-
 
 % Questao 2
 % Translada a figura <Id> para <N> passos a frente
-figuraparafrente(Id, N) :- true.
+% Implementado apenas em relação a <X>
+figuraparafrente(Id, N) :- 
+    listXY(Id, [CoInicial|_]),
+    nth0(1,CoInicial,Xinicial),
+    nth0(2,CoInicial,Yinicial),
+    retract(xy(Id, Xinicial, Yinicial)),
+    NewX is Xinicial + N,
+    asserta(xy(Id, NewX, Xinicial)).
 
 % Questao 3
 % Translada a figura <Id> para <N> passos para trás
-figuraparatras(Id, N) :- true.
+% Implementado apenas em relação a <X>
+figuraparafrente(Id, N) :- 
+    listXY(Id, [CoInicial|_]),
+    nth0(1,CoInicial,Xinicial),
+    nth0(2,CoInicial,Yinicial),
+    retract(xy(Id, Xinicial, Yinicial)),
+    NewX is Xinicial - N,
+    asserta(xy(Id, NewX, Xinicial)).
 
 % Questao 4
 % Rotaciona a figura <Id> em A graus no sentido horário a partir da
