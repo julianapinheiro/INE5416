@@ -1,0 +1,25 @@
+Relatório 9 - INE5416/2017.2
+Juliana Silva Pinheiro
+16100735
+
+Parte 1
+
+"Lazy evaluation", ou avaliação preguiçosa, é atrasar a computação de 
+uma expressão até o momento em que for necessário, evitando computações 
+desnecessárias. Essa técnica pode aumentar o desempenho, e uma linguagem
+que utiliza essa técnica é considerada "lazy".
+
+Mapeamento em listas facilita a manipulação dos seus diversos elementos,
+bem como facilita a criação de sequências específicas. Por exemplo,
+	map x^2 [1,2,3] 
+retorna uma lista com os quadrados dos elementos da
+lista original.
+
+O módulo Data.List do Haskell tem como utilidade operações em listas,
+sendo composto de diversas funções para este fim, como concatenar duas
+listas, retornar o primeiro/último elemento de uma lista, a função
+"map", entre outros.
+
+Parte 2
+
+Implementada no arquivo relatorio9.hs
