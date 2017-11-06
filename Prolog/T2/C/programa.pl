@@ -51,6 +51,7 @@ load :-
     retractall(xylast(_,_,_)),
     retractall(angle(_)),
     retractall(active(_)),
+    retractall(figureangle(_,_)),
     open('desenhos.pl', read, Stream),
     repeat,
         read(Stream, Data),
@@ -67,6 +68,7 @@ commit :-
     listing(angle),   %listagem dos predicados 'angle'
     listing(active),  %listagem dos predicados 'active'
     listing(xy),      %listagem dos predicados 'xy'
+    listing(figureangle),
     tell(Screen),
     close(Stream).
 
@@ -128,8 +130,10 @@ tartaruga :-
     retractall(xylast(_,_,_)),
     retractall(angle(_)),
     retractall(active(_)),
+    retractall(figureangle(_,_)),
     new(1, 500, 500),
     asserta(xylast(1, 500, 500)),
+    asserta(figureangle(1, 90)),
     setAngle(90),
     setLapis(1).
 
@@ -171,7 +175,8 @@ uselapis :-
     xylast(Id, _, _),
     NewId is Id + 1,
     (NewId > 0 -> xylast(Id,X,Y), new(NewId, X, Y), 
-    retractall(xylast(_,_,_)), asserta(xylast(NewId, X, Y)); true).
+        assertz(figureangle(NewId, 90)), retractall(xylast(_,_,_)), 
+        asserta(xylast(NewId, X, Y)); true).
     
 %------------------------------------
 % t2C
@@ -182,16 +187,24 @@ uselapis :-
 allIds(L) :- findall(Id, xy(Id, _, _), L1), sort(L1, L).
 
 % Monta a lista <All> com todos os pontos xy da database 
-listXY(Id, All) :- findall(V, (xy(Id, X, Y), append([Id], [X], L), append(L, [Y], V)), All).
+listXY(Id, All) :- 
+    findall(V, (xy(Id, X, Y), append([Id], [X], L), 
+    append(L, [Y], V)), All).
 
 % Determina um novo <Id> na sequencia numerica existente
 newId(Id) :- allIds(S), last(S, Last), Id is Last + 1.
+
+% Modifica ângulo da figura
+setfigureangle(Id, A) :- 
+    retractall(figureangle(Id, _)), 
+    asserta(figureangle(Id, A)).
 
 % Questao 1
 % Duplica a figura <Id> (criando um novo Id), na coordenada inicial <X,Y>
 % cloneId do t2A/programa.pl modificado
 figuraclone(Id, X, Y) :- 
     newId(NewId),
+    asserta(figureangle(NewId, 90)),
     retractall(xylast(_,_,_)),
     listXY(Id, All),
     length(All, Size),
@@ -224,28 +237,30 @@ figuraparafrente(Id, N) :-
 % Translada a figura <Id> para <N> passos para trás
 % Implementado utilizando o <angle> atual para o cálculo do deslocamento
 figuraparatras(Id, N) :- 
-    M is -N,
+    M is -N,    
     figuraparafrente(Id, M).
 
 % Questao 4
 % Rotaciona a figura <Id> em A graus no sentido horário a partir da
 % coordenada absoluta inicial
-% IDEIA: para cada deslocamento fazer NewX,NewY
 figuragiradireita(Id, A) :-
+    figureangle(Id, G),
+    NovoG is mod(G - A, 360),
+    setfigureangle(Id, NovoG),
     listXY(Id, [CoInicial|Desl]),  % Coordenada inicial
     nth0(1,CoInicial,X0),          % Desl = lista de deslocamentos
     nth0(2,CoInicial,Y0),
     retractall(xy(Id, _, _)),      % Retract todos os deslocamentos
     length(Desl, Size),            % Numero de deslocamentos
-    between(0, Size, Middle),
-    nth0(Middle, Desl, J),
+    between(0, Size, I),           % Iteração por I
+    nth0(I, Desl, J),
     nth0(1, J, X1),
     nth0(2, J, Y1),
     NewX is X1*cos(A*pi/180) - Y1*sin(A*pi/180),
     NewY is Y1*cos(A*pi/180) + X1*sin(A*pi/180),
     assertz(xy(Id, NewX, NewY)),        % Asserta novo deslocamento(i)
     % Asserta coordenada inicial
-    ( Middle =:= Size - 1 -> asserta(xy(Id, X0, Y0)), !).          
+    (I =:= Size - 1 -> asserta(xy(Id, X0, Y0)), !).          
 
 % Questao 5
 % Rotaciona a figura <Id> em A graus no sentido anti-horário a partir da
