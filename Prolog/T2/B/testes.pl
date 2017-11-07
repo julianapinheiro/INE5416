@@ -1,5 +1,5 @@
-%	:- set_prolog_flag(double_quotes, codes).
-%	:- initialization(testes).
+:- set_prolog_flag(double_quotes, codes).
+:- initialization(testes).
 
 testes :-
 	consult('programa.pl'),
@@ -18,6 +18,11 @@ testes :-
 teste1 :-
 	consult('programa.pl'),
 	load,
-	cmd("un pt 150 ul"),
 	cmd("repita 12 [ pf 100 gd 150 ]"), 
+	svg.
+
+testes2 :- 
+	consult('programa.pl'),
+	load,
+	cmd("gd 90 pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
 	svg.

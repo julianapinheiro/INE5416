@@ -104,6 +104,16 @@ svg :-
     tell(Screen),
     close(Stream).
 
+% Grava os desenhos em SVG, com o nome do arquivo como argumento
+svg(File) :-
+    commit,
+    open(File, write, Stream),
+    telling(Screen),
+    tell(Stream),
+    consult('db2svg.pl'),  %programa para conversao
+    tell(Screen),
+    close(Stream).
+
 %------------------------------------
 % t2B
 % -----------------------------------
