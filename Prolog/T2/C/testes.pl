@@ -1,7 +1,5 @@
 :- set_prolog_flag(double_quotes, codes).
-:- initialization(teste1).
-
-teste :- true.
+:- initialization(teste2).
 
 %------------------------------------
 % t2B
@@ -35,4 +33,14 @@ teste1 :-
 	cmd("figclone 1 300 500"),
 	cmd("figgd 2 10"),
 	cmd("figge 3 10"),
+	svg.
+
+% Desenho não está funcionando TODO: testar
+teste2 :-
+	consult('programa.pl'),
+	load,
+	cmd("pf 54 ge 37 pt 28 gd 95 pf 54 ge 37 pt 28 gd 95 pf 54
+	ge 37 pt 28 gd 95 pf 54 ge 37 pt 28 gd 95 pf 54 ge 37
+	pt 28 gd 95 pf 54 ge 37 pt 28 gd 95"),
+	cmd("figclone 1 700 500"),
 	svg.
