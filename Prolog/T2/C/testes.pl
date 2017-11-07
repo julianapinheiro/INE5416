@@ -1,87 +1,74 @@
-:- set_prolog_flag(double_quotes, codes).
-:- initialization(teste3).
+/*
+    Testes para o trabalho t2C da disciplina de Paradigmas de Programação
+    Alunos: Juliana Silva Pinheiro
 
-%------------------------------------
-% t2B
-% -----------------------------------
+    OBSERVAÇÃO:
+    - Criar uma pasta 'Desenhos'
+    - Os testes modificam o arquivo 'desenhos.pl' e retornam o arquivo ao 
+    estado original (tartaruga) no final
+*/
+
+:- set_prolog_flag(double_quotes, codes).
+:- initialization(testes).
 
 testes :-
-	consult('programa.pl'),
-	load,
-	cmd("pf 54 ge 37 pt 28 gd 95 pf 54 ge 37 pt 28 gd 95 pf 54
-	ge 37 pt 28 gd 95 pf 54 ge 37 pt 28 gd 95 pf 54 ge 37
-	pt 28 gd 95 pf 54 ge 37 pt 28 gd 95"),
-	cmd("un pt 200 ge 90 pf 200 ul"),
-	cmd("repita 36 [ gd 150 repita 8 [ pf 50 ge 45 ] ]"),
-	cmd("un pt 400 ul"),
-	cmd("repita 72 [ ge 10 pf 5 ]"),
-	cmd("un pt 150 ul"),
-	cmd("repita 12 [ pf 100 gd 150 ]"), 
-	svg('desenhos.svg').
-
-%------------------------------------
-% t2C
-% -----------------------------------
+    teste0, teste1, teste2, teste3, teste4, teste5,
+    tartaruga, commit.
 
 % Teste: figuraclone, figuragiradireita, figuragiraesquerda
 % Desenha 3 quadrados de mesmo tamanho lado a lado,
 % girando um para esquerda e outro para direita 10 graus
 teste0 :-
-	consult('programa.pl'),
-	load,
-	cmd("pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
-	cmd("figclone 1 700 500"),
-	cmd("figclone 1 300 500"),
-	cmd("figgd 2 10"),
-	cmd("figge 3 10"),
-	svg('teste0.svg').
+    consult('programa.pl'),
+    tartaruga,
+    cmd("pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
+    cmd("figclone 1 700 500"),
+    cmd("figclone 1 300 500"),
+    cmd("figgd 2 10"),
+    cmd("figge 3 10"),
+    svg('Desenhos/teste0.svg').
 
 % Teste: figuraclone
 % Desenha uma "flor grande" (do t2B) e a copia para a posição (700,200)
 teste1 :-
-	consult('programa.pl'),
-	tartaruga,
-	load,
-	cmd("repita 36 [ gd 150 repita 8 [ pf 50 ge 45 ] ]"),
-	cmd("figclone 1 700 200"),
-	svg('teste1.svg').
+    consult('programa.pl'),
+    tartaruga,
+    cmd("repita 36 [ gd 150 repita 8 [ pf 50 ge 45 ] ]"),
+    cmd("figclone 1 700 200"),
+    svg('Desenhos/teste1.svg').
 
 % Teste: figuraparafrente
-% Desenha uma circunferência em (500,500) e move-a para frente 300u
+% Desenha uma circunferência em (500,500) e move-a para frente 250u
 teste2 :-
-	consult('programa.pl'),
-	tartaruga,
-	load,
-	cmd("repita 72 [ ge 10 pf 5 ]"),
-	cmd("figpf 1 300"),
-	svg('teste2.svg').
+    consult('programa.pl'),
+    tartaruga,
+    cmd("repita 36 [ ge 10 pf 10 ]"),
+    cmd("figpf 1 250"),
+    svg('Desenhos/teste2.svg').
 
 % Teste: figuraparatras
-% Desenha uma circunferência em (500,500) e move-a para trás 200u
+% Desenha uma circunferência em (500,500) e move-a para trás 250u
 teste3 :-
-	consult('programa.pl'),
-	tartaruga,
-	load,
-	cmd("repita 72 [ ge 10 pf 5 ]"),
-	cmd("figpt 1 200"),
-	svg('teste3.svg').
+    consult('programa.pl'),
+    tartaruga,
+    cmd("repita 36 [ ge 10 pf 10 ]"),
+    cmd("figpt 1 250"),
+    svg('Desenhos/teste3.svg').
 
 % Teste: figuragiradireita
-% Desenha um quadrado em (500,500) e gira a direita 45 graus
+% Desenha um quadrado em (500,500) e gira a direita 30 graus
 teste4 :-
-	consult('programa.pl'),
-	tartaruga,
-	load,
-	cmd("pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
-	cmd("figgd 1 45"),
-	svg('teste4.svg').
+    consult('programa.pl'),
+    tartaruga,
+    cmd("pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
+    cmd("figgd 1 30"),
+    svg('Desenhos/teste4.svg').
 
 % Teste: figuragiraesquerda
 % Desenha um quadrado em (500,500) e gira a esquerda 30 graus
 teste5 :-
-	consult('programa.pl'),
-	tartaruga,
-	load,
-	cmd("pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
-	cmd("figge 1 30"),
-	svg('teste5.svg').
+    consult('programa.pl'),
+    tartaruga,
+    cmd("pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
+    cmd("figge 1 30"),
+    svg('Desenhos/teste5.svg').

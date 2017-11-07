@@ -28,8 +28,7 @@
      Ou simplesmente:
      ?- cmd("repita 5[pf 50 gd 45]").
      
-   - Colocar o nome e matricula de cada integrante do grupo
-     nestes comentarios iniciais do programa
+   - Alunos: Juliana Silva Pinheiro
 */
 
 :- set_prolog_flag(double_quotes, codes).
@@ -185,8 +184,8 @@ uselapis :-
     xylast(Id, _, _),
     NewId is Id + 1,
     (NewId > 0 -> xylast(Id,X,Y), new(NewId, X, Y), 
-        assertz(figureangle(NewId, 90)), retractall(xylast(_,_,_)), 
-        asserta(xylast(NewId, X, Y)); true).
+    assertz(figureangle(NewId, 90)), retractall(xylast(_,_,_)), 
+    asserta(xylast(NewId, X, Y)); true).
     
 %------------------------------------
 % t2C
@@ -230,9 +229,9 @@ figuraclone(Id, X, Y) :-
 
 % Questao 2
 % Translada a figura <Id> para <N> passos a frente
-% Implementado utilizando o <angle> atual para o cálculo do deslocamento
+% Implementado utilizando figurangle(Id, A) para a direção do deslocamento
 figuraparafrente(Id, N) :- 
-    angle(A),
+    figureangle(Id, A),
     X is N * cos(A*pi/180), 
     Y is N * sin(A*pi/180)*(-1),
     listXY(Id, [CoInicial|_]),
@@ -245,7 +244,7 @@ figuraparafrente(Id, N) :-
 
 % Questao 3
 % Translada a figura <Id> para <N> passos para trás
-% Implementado utilizando o <angle> atual para o cálculo do deslocamento
+% Implementado utilizando figurangle(Id, A) para a direção do deslocamento
 figuraparatras(Id, N) :- 
     M is -N,    
     figuraparafrente(Id, M).

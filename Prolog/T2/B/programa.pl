@@ -30,6 +30,8 @@
      
    - Colocar o nome e matricula de cada integrante do grupo
      nestes comentarios iniciais do programa
+
+    Aluna: Juliana Silva Pinheiro
 */
 
 :- set_prolog_flag(double_quotes, codes).

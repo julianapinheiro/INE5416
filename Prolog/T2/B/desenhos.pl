@@ -13,3 +13,4 @@ active(1).
 :- dynamic xy/3.
 
 xy(1, 500, 500).
+
