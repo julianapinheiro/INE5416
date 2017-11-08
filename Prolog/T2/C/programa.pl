@@ -255,7 +255,6 @@ figuraparatras(Id, N) :-
 figuragiradireita(Id, A) :-
     figureangle(Id, G),
     NovoG is mod(G - A, 360),
-    setfigureangle(Id, NovoG),
     listXY(Id, [CoInicial|Desl]),  % Coordenada inicial
     nth0(1,CoInicial,X0),          % Desl = lista de deslocamentos
     nth0(2,CoInicial,Y0),
@@ -269,7 +268,8 @@ figuragiradireita(Id, A) :-
     NewY is Y1*cos(A*pi/180) + X1*sin(A*pi/180),
     assertz(xy(Id, NewX, NewY)),        % Asserta novo deslocamento(i)
     % Asserta coordenada inicial
-    (I =:= Size - 1 -> asserta(xy(Id, X0, Y0)), !).          
+    (I =:= Size - 1 -> asserta(xy(Id, X0, Y0)), 
+        setfigureangle(Id, NovoG), !).          
 
 % Questao 5
 % Rotaciona a figura <Id> em A graus no sentido anti-horário a partir da

@@ -12,21 +12,8 @@
 :- initialization(testes).
 
 testes :-
-    teste0, teste1, teste2, teste3, teste4, teste5,
+    teste1, teste2, teste3, teste4, teste5,
     tartaruga, commit.
-
-% Teste: figuraclone, figuragiradireita, figuragiraesquerda
-% Desenha 3 quadrados de mesmo tamanho lado a lado,
-% girando um para esquerda e outro para direita 10 graus
-teste0 :-
-    consult('programa.pl'),
-    tartaruga,
-    cmd("pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
-    cmd("figclone 1 700 500"),
-    cmd("figclone 1 300 500"),
-    cmd("figgd 2 10"),
-    cmd("figge 3 10"),
-    svg('Desenhos/teste0.svg').
 
 % Teste: figuraclone
 % Desenha uma "flor grande" (do t2B) e a copia para a posição (700,200)
@@ -43,6 +30,7 @@ teste2 :-
     consult('programa.pl'),
     tartaruga,
     cmd("repita 36 [ ge 10 pf 10 ]"),
+    cmd("figclone 1 500 500"),
     cmd("figpf 1 250"),
     svg('Desenhos/teste2.svg').
 
@@ -52,6 +40,7 @@ teste3 :-
     consult('programa.pl'),
     tartaruga,
     cmd("repita 36 [ ge 10 pf 10 ]"),
+    cmd("figclone 1 500 500"),
     cmd("figpt 1 250"),
     svg('Desenhos/teste3.svg').
 
@@ -61,6 +50,7 @@ teste4 :-
     consult('programa.pl'),
     tartaruga,
     cmd("pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
+    cmd("figclone 1 300 500"),
     cmd("figgd 1 30"),
     svg('Desenhos/teste4.svg').
 
@@ -70,5 +60,6 @@ teste5 :-
     consult('programa.pl'),
     tartaruga,
     cmd("pf 100 gd 90 pf 100 gd 90 pf 100 gd 90 pf 100"), 
+    cmd("figclone 1 300 500"),
     cmd("figge 1 30"),
     svg('Desenhos/teste5.svg').
