@@ -1,6 +1,10 @@
--- Projeto 3 - INE5416/2017.2
--- Aluna: Juliana Silva Pinheiro
--- Matrícula: 16100735
+{- 
+    Projeto 3 - INE5416/2017.2
+    Aluna: Juliana Silva Pinheiro
+    Matrícula: 16100735
+
+    Uso: runhaskell Projeto3.hs [nomedoarquivo].bmp
+-}
 
 import Data.Char
 import System.Environment
@@ -9,17 +13,19 @@ import Data.List
 
 {-
     Modulo principal
-    @Params: input  nome do arquivo bmp
+    @Params: archive  nome do arquivo bmp
 -}
 main :: IO ()
 main = do
     args <- getArgs
     case args of
-        [input] -> do
-            hIn <- openBinaryFile input ReadMode
+        [archive] -> do
+            hIn <- openBinaryFile archive ReadMode
             toString <- hGetContents hIn
-            saveLayers input (processLayers toString)
+            saveLayers archive (processLayers toString)
             hClose hIn
+        _ -> putStrLn "Uso: runhaskell Projeto3.hs [nomedoarquivo].bmp"
+
 
 {-
     Salva as camadas em floating point em arquivos txt.
@@ -53,15 +59,11 @@ processLayers :: String -> [[Float]]
 processLayers toString = do
     let content = snd (splitAt 54 (map ord toString))
     let rgb = split 3 content
-    let red = (map (\x  -> x!!2) rgb)
-    let r = (map (\x -> fromIntegral x/256) red)
-    let blue = (map (\x  -> x!!0) rgb)
-    let b = map (\x -> fromIntegral x/256) blue
-    let green = (map (\x  -> x!!1) rgb)
-    let g = map (\x -> fromIntegral x/256) green
+    -- Arquivos .bmp são Little Endian, por isso RGB => [b, g, r]
+    let r = (map (\x -> fromIntegral (x!!2) / 255) rgb)  
+    let g = (map (\x -> fromIntegral (x!!1) / 255) rgb)
+    let b = (map (\x -> fromIntegral (x!!0) / 255) rgb)
     return [r, g, b]!!0
-
--- map (\x -> fromIntegral x/256) (map (\x  -> x!!2) rgb)
 
 {- 
     Separa uma lista em partes de tamanho n.
