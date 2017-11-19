@@ -1,0 +1,37 @@
+Relatório 10 - INE5416/2017.2
+Juliana Silva Pinheiro
+16100735
+
+Parte 1
+
+Em matemática, homologia é uma forma de associar uma sequência
+de objetos algébricos tais como grupos ou grupos algebrianos ou módulos
+a outros objetos matemáticos tais como o espaço topológico. 
+Um espaço topológico é uma estrutura que perimite formalizar conceitos
+tais como convergência, conexidade e continuidade. Um espaço topoloógico
+é definidio por um par (X, t) onde X é um conjunto e t é uma topologia em X.
+
+Uma mônoda, em Teoria das categorias, é uma tripla de um endofunctor 
+(um functor mapeando uma categoria a si mesmo) junto com duas transformações 
+naturais. Mônadas são usadas na teoria de pares de functors adjuntos.
+
+Functor é um mapeamento entre categorias que preserva estruturas, podendo 
+ser visto como homomorfismos na categoria de todas as categorias pequenas.
+
+Mônadas (Monad) em Haskell podem ser entendidas como descrições de 
+computações "composta" (composable), isto é, sequências de passos de
+processamento na qual se adiciona mais regras conforme necessário.
+A essência da mônada é portanto a separação da linha de tempo de composição
+da linha de tempo de execução da computação composta, bem como a capacidade
+da computação de carregar implicitamente dados adicionais, como parte
+da própria computação, além da saída que irá produzir quando for rodado.
+
+Functor são "coisas" que podem sofrer mapeamento sobre ela, como listas 
+(List), árvores (Tree), etc. Em Haskell, são descritos pela typeclass Functor
+que tem apenas um método typeclass, fmap, do tipo
+	fmap :: (a -> b) -> f a -> f b
+
+Parte 2
+
+O uso de mônadas no módulo Resist "protege" o código de possíveis erros 
+gerados por divisões por zero.
